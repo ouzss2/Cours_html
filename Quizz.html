@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plateforme d'Apprentissage HTML - Quiz</title>
+    <title>Quiz HTML - Testez vos connaissances</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #8A2BE2;
-            --primary-dark: #4B0082;
-            --secondary: #9370DB;
-            --accent: #6A0DAD;
-            --light: #E6E6FA;
-            --dark: #2C003E;
-            --success: #4CAF50;
-            --warning: #FF9800;
-            --error: #F44336;
-            --gray: #f5f5f5;
-            --text: #333;
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --warning: #ffcc00;
+            --danger: #dc3545;
+            --gray: #6c757d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
         
         * {
@@ -27,2669 +28,983 @@
         }
         
         body {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
             min-height: 100vh;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            padding: 30px 0;
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .dashboard {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .sidebar {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            height: fit-content;
-        }
-        
-        .progress-container {
-            margin-bottom: 30px;
-        }
-        
-        .progress-bar {
-            height: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background: var(--accent);
-            border-radius: 5px;
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        
-        .progress-text {
-            font-size: 0.9rem;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .module-list {
-            list-style: none;
-        }
-        
-        .module-item {
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-        }
-        
-        .module-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .module-item.active {
-            background: var(--accent);
-            font-weight: 600;
-        }
-        
-        .module-item.locked {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .module-icon {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-        
-        .content-area {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-        
-        .module-header {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .module-title {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .module-title::before {
-            content: "🧩";
-            margin-right: 10px;
-            font-size: 1.5rem;
-        }
-        
-        .module-description {
-            opacity: 0.9;
-            line-height: 1.6;
         }
         
         .quiz-container {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 20px;
+            width: 100%;
+            max-width: 900px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
         }
         
-        .quiz-title {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
+        .quiz-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .quiz-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .quiz-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .quiz-progress {
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-top: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+        
+        .quiz-body {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            min-height: 500px;
+        }
+        
+        .question-container {
+            flex-grow: 1;
+        }
+        
+        .question-number {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
+            gap: 8px;
         }
         
-        .quiz-title::before {
-            content: "📝";
-            margin-right: 10px;
-        }
-        
-        .question {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        .question-number i {
+            color: var(--primary);
         }
         
         .question-text {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            font-weight: 600;
         }
         
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
         }
         
         .option {
+            padding: 18px 20px;
+            background-color: var(--light);
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
             display: flex;
             align-items: center;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
+            gap: 15px;
+            font-size: 1.1rem;
         }
         
         .option:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .option input {
-            margin-right: 10px;
-        }
-        
-        .feedback {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            display: none;
-        }
-        
-        .correct {
-            background: rgba(76, 175, 80, 0.2);
-            color: #4CAF50;
-            display: block;
-        }
-        
-        .incorrect {
-            background: rgba(244, 67, 54, 0.2);
-            color: #F44336;
-            display: block;
-        }
-        
-        .check-answers {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-top: 20px;
-            transition: all 0.3s;
-        }
-        
-        .check-answers:hover {
-            background: var(--accent);
-            transform: translateY(-3px);
-        }
-        
-        .results {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            display: none;
-        }
-        
-        .completion-message {
-            text-align: center;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            margin-top: 20px;
-            display: none;
-        }
-        
-        .complete-btn {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-top: 15px;
-            transition: all 0.3s;
-        }
-        
-        .complete-btn:hover {
-            background: #3d8b40;
+            border-color: var(--primary);
+            background-color: #f0f4ff;
             transform: translateY(-2px);
         }
         
-        .locked-message {
-            text-align: center;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
+        .option.selected {
+            border-color: var(--primary);
+            background-color: #e6eeff;
+            box-shadow: 0 2px 8px rgba(67, 97, 238, 0.2);
+        }
+        
+        .option-letter {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+        
+        .option.selected .option-letter {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            border: none;
             border-radius: 10px;
-            margin-top: 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        footer {
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-prev {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .btn-prev:hover:not(:disabled) {
+            background-color: #e2e6ea;
+        }
+        
+        .btn-next, .btn-submit {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-next:hover:not(:disabled), .btn-submit:hover:not(:disabled) {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-restart {
+            background-color: var(--success);
+            color: white;
+            margin: 20px auto 0;
+        }
+        
+        .btn-restart:hover {
+            background-color: #3a9c35;
+            transform: translateY(-2px);
+        }
+        
+        .results-container {
             text-align: center;
-            margin-top: 40px;
+            padding: 40px 30px;
+            display: none;
+        }
+        
+        .results-header {
+            margin-bottom: 30px;
+        }
+        
+        .results-header h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: conic-gradient(var(--success) 0% 70%, #e9ecef 70% 100%);
+            position: relative;
+        }
+        
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: white;
+        }
+        
+        .score-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .score-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1;
+        }
+        
+        .score-total {
+            font-size: 1.2rem;
+            color: var(--gray);
+        }
+        
+        .result-message {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: var(--dark);
+        }
+        
+        .feedback-container {
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .feedback-item {
             padding: 20px;
-            opacity: 0.8;
-            font-size: 0.9rem;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            background-color: var(--light);
         }
         
-        @media (max-width: 900px) {
-            .dashboard {
-                grid-template-columns: 1fr;
+        .feedback-item.correct {
+            border-left: 5px solid var(--success);
+        }
+        
+        .feedback-item.incorrect {
+            border-left: 5px solid var(--danger);
+        }
+        
+        .feedback-question {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feedback-answer {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .correct-answer {
+            color: var(--success);
+            font-weight: 600;
+        }
+        
+        .incorrect-answer {
+            color: var(--danger);
+            font-weight: 600;
+        }
+        
+        .feedback-explanation {
+            color: var(--gray);
+            font-style: italic;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #dee2e6;
+        }
+        
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gray);
+            font-weight: 600;
+        }
+        
+        .timer i {
+            color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-header h1 {
+                font-size: 1.8rem;
             }
             
-            .sidebar {
-                order: 2;
+            .question-text {
+                font-size: 1.2rem;
             }
             
-            .content-area {
-                order: 1;
+            .option {
+                padding: 15px;
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .score-circle::before {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .score-value {
+                font-size: 2.5rem;
             }
         }
         
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2.2rem;
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+        
+        .shape-1 {
+            width: 80px;
+            height: 80px;
+            background-color: var(--accent);
+            top: 10%;
+            left: 5%;
+            animation: float 15s infinite linear;
+        }
+        
+        .shape-2 {
+            width: 120px;
+            height: 120px;
+            background-color: var(--primary);
+            top: 60%;
+            right: 5%;
+            animation: float 20s infinite linear reverse;
+        }
+        
+        .shape-3 {
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary);
+            bottom: 10%;
+            left: 10%;
+            animation: float 12s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
             }
-            
-            .module-title {
-                font-size: 1.5rem;
+            50% {
+                transform: translateY(-20px) rotate(180deg);
             }
-            
-            .content-area, .sidebar {
-                padding: 20px;
+            100% {
+                transform: translateY(0) rotate(360deg);
             }
+        }
+        
+        .shuffle-notice {
+            background-color: #e6eeff;
+            border-left: 4px solid var(--primary);
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .shuffle-notice i {
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>HTML Zero to Hero</h1>
-            <p class="subtitle">Maîtrisez le HTML grâce à notre série de quiz progressifs. Débloquez chaque module en réussissant le quiz précédent.</p>
-        </header>
+    <div class="quiz-container">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
         
-        <div class="dashboard">
-            <div class="sidebar">
-                <div class="progress-container">
-                    <h3>Votre Progression</h3>
-                    <div class="progress-bar">
-                        <div class="progress" id="progress-bar"></div>
-                    </div>
-                    <div class="progress-text">
-                        <span id="progress-text">0% Terminé</span>
-                        <span id="module-count">0/10 Modules</span>
-                    </div>
-                </div>
-                
-                <h3>Parcours d'Apprentissage</h3>
-                <ul class="module-list" id="module-list">
-                    <!-- Modules will be populated by JavaScript -->
-                </ul>
-            </div>
+        <div class="quiz-header">
+            <h1><i class="fas fa-code"></i> Quiz HTML</h1>
             
-            <div class="content-area">
-                <div class="module-header">
-                    <h2 class="module-title" id="module-title">Bienvenue dans HTML Zero to Hero !</h2>
-                    <p class="module-description" id="module-description">Sélectionnez un module dans la barre latérale pour commencer votre apprentissage du HTML.</p>
-                </div>
-                
-                <div id="module-content">
-                    <!-- Module content will be loaded here -->
-                </div>
+            <div class="quiz-progress">
+                <div class="progress-bar" id="progress-bar"></div>
             </div>
         </div>
         
-        <footer>
-            <p>HTML Zero to Hero - Plateforme d'Apprentissage par Quiz &copy; 2023</p>
-        </footer>
+        <div class="quiz-body">
+           
+            
+            <div id="question-container" class="question-container">
+                <!-- Question content will be inserted here by JavaScript -->
+            </div>
+            
+            <div class="quiz-footer">
+                <button class="btn btn-prev" id="prev-btn" disabled>
+                    <i class="fas fa-arrow-left"></i> Précédent
+                </button>
+                
+                <div class="timer">
+                    <i class="fas fa-clock"></i>
+                    <span id="timer">20:00</span>
+                </div>
+                
+                <button class="btn btn-next" id="next-btn">
+                    Suivant <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <button class="btn btn-submit" id="submit-btn" style="display: none;">
+                    <i class="fas fa-paper-plane"></i> Soumettre
+                </button>
+            </div>
+        </div>
+        
+        <div id="results-container" class="results-container">
+            <div class="results-header">
+                <h2>Résultats du Quiz</h2>
+            </div>
+            
+            <div class="score-circle">
+                <div class="score-text">
+                    <div class="score-value" id="score-value">0</div>
+                    <div class="score-total">/ 20</div>
+                </div>
+            </div>
+            
+            <div class="result-message" id="result-message"></div>
+            
+            <div class="feedback-container" id="feedback-container">
+                <!-- Feedback will be inserted here by JavaScript -->
+            </div>
+            
+            <button class="btn btn-restart" id="restart-btn">
+                <i class="fas fa-redo"></i> Recommencer le quiz
+            </button>
+        </div>
     </div>
 
     <script>
-        // Define all modules and their content in French
-        const modules = [
+        // Questions du quiz (20 questions)
+        const originalQuestions = [
             {
-                id: 0,
-                title: "Débuter avec HTML",
-                description: "Introduction au HTML et structure de base des documents",
-                icon: "🚀",
-                quiz: {
-                    title: "Quiz sur les Bases du HTML",
-                    questions: [
-                        {
-                            text: "Que signifie HTML ?",
-                            options: [
-                                "Hyper Text Markup Language",
-                                "High Tech Modern Language",
-                                "Hyper Transfer Markup Language",
-                                "Home Tool Markup Language"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour définir le contenu principal d'un document HTML ?",
-                            options: [
-                                "&lt;main&gt;",
-                                "&lt;body&gt;",
-                                "&lt;content&gt;",
-                                "&lt;html&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quel est le but de la balise &lt;head&gt; ?",
-                            options: [
-                                "Afficher le titre principal de la page",
-                                "Contenir les métadonnées sur le document",
-                                "Définir la section d'en-tête de la page",
-                                "Créer un menu de navigation"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Laquelle de ces déclarations est correcte pour déclarer un document HTML5 ?",
-                            options: [
-                                "&lt;!DOCTYPE HTML5&gt;",
-                                "&lt;!DOCTYPE html&gt;",
-                                "&lt;!DOCTYPE HTML PUBLIC&gt;",
-                                "&lt;HTML VERSION='5'&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quel est l'élément racine d'un document HTML ?",
-                            options: [
-                                "&lt;root&gt;",
-                                "&lt;html&gt;",
-                                "&lt;document&gt;",
-                                "&lt;body&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise contient le contenu visible de la page web ?",
-                            options: [
-                                "&lt;head&gt;",
-                                "&lt;content&gt;",
-                                "&lt;main&gt;",
-                                "&lt;body&gt;"
-                            ],
-                            correct: 3
-                        },
-                        {
-                            text: "Que définit la balise &lt;title&gt; ?",
-                            options: [
-                                "Le titre principal de la page",
-                                "Le titre de l'onglet du navigateur",
-                                "Le pied de page du document",
-                                "Le type de document"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quel encodage de caractères est recommandé pour HTML5 ?",
-                            options: [
-                                "UTF-8",
-                                "ASCII",
-                                "ISO-8859-1",
-                                "UTF-16"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Où doit être placée la balise &lt;meta charset='UTF-8'&gt; ?",
-                            options: [
-                                "Dans la section &lt;body&gt;",
-                                "Dans la section &lt;head&gt;",
-                                "Après la balise &lt;body&gt;",
-                                "Avant la balise &lt;html&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un saut de ligne ?",
-                            options: [
-                                "&lt;break&gt;",
-                                "&lt;lb&gt;",
-                                "&lt;br&gt;",
-                                "&lt;newline&gt;"
-                            ],
-                            correct: 2
-                        },
-                        {
-                            text: "Quel est le but de la déclaration &lt;!DOCTYPE&gt; ?",
-                            options: [
-                                "Définir le jeu de caractères du document",
-                                "Lier à un fichier CSS externe",
-                                "Spécifier la version HTML",
-                                "Créer un commentaire dans le code"
-                            ],
-                            correct: 2
-                        },
-                        {
-                            text: "Laquelle de ces options est un commentaire HTML valide ?",
-                            options: [
-                                "&lt;!-- Ceci est un commentaire --&gt;",
-                                "&lt;comment&gt;Ceci est un commentaire&lt;/comment&gt;",
-                                "// Ceci est un commentaire",
-                                "/* Ceci est un commentaire */"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Que fournit généralement la balise &lt;meta&gt; ?",
-                            options: [
-                                "Le contenu visuel de la page",
-                                "Les métadonnées sur le document HTML",
-                                "Les liens de navigation",
-                                "Les champs de formulaire"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour définir la relation entre un document et une ressource externe ?",
-                            options: [
-                                "&lt;src&gt;",
-                                "&lt;link&gt;",
-                                "&lt;rel&gt;",
-                                "&lt;resource&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quel est l'ordre correct de la structure d'un document HTML ?",
-                            options: [
-                                "&lt;html&gt; &lt;head&gt; &lt;body&gt;",
-                                "&lt;head&gt; &lt;html&gt; &lt;body&gt;",
-                                "&lt;body&gt; &lt;head&gt; &lt;html&gt;",
-                                "&lt;html&gt; &lt;body&gt; &lt;head&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un lien hypertexte ?",
-                            options: [
-                                "&lt;hyperlink&gt;",
-                                "&lt;a&gt;",
-                                "&lt;link&gt;",
-                                "&lt;href&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour spécifier l'URL d'un lien ?",
-                            options: [
-                                "src",
-                                "url",
-                                "href",
-                                "link"
-                            ],
-                            correct: 2
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour insérer une image ?",
-                            options: [
-                                "&lt;picture&gt;",
-                                "&lt;img&gt;",
-                                "&lt;image&gt;",
-                                "&lt;src&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quel attribut est obligatoire pour la balise &lt;img&gt; ?",
-                            options: [
-                                "src",
-                                "alt",
-                                "width",
-                                "height"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Que signifie l'attribut 'alt' dans une balise image ?",
-                            options: [
-                                "Texte alternatif affiché si l'image ne se charge pas",
-                                "Alignement du texte",
-                                "Lien alternatif",
-                                "Animation de l'image"
-                            ],
-                            correct: 0
-                        }
-                    ]
-                }
+                question: "Que signifie l'acronyme HTML?",
+                options: [
+                    "HyperText Markup Language",
+                    "HighTech Modern Language",
+                    "Hyper Transfer Markup Language",
+                    "Home Tool Markup Language"
+                ],
+                correct: 0,
+                explanation: "HTML signifie HyperText Markup Language. C'est le langage de balisage standard utilisé pour créer des pages web."
             },
             {
-                id: 1,
-                title: "Texte et Formatage",
-                description: "Apprenez à travailler avec le texte, les titres, les paragraphes et le formatage de texte",
-                icon: "📝",
-                quiz: {
-                    title: "Quiz sur le Formatage de Texte",
-                    questions: [
-                        {
-                            text: "Quelle balise HTML est utilisée pour le titre le plus important ?",
-                            options: [
-                                "&lt;h1&gt;",
-                                "&lt;head&gt;",
-                                "&lt;header&gt;",
-                                "&lt;h6&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise utiliseriez-vous pour mettre le texte en gras ?",
-                            options: [
-                                "&lt;bold&gt;",
-                                "&lt;b&gt;",
-                                "&lt;strong&gt;",
-                                "&lt;b&gt; et &lt;strong&gt;"
-                            ],
-                            correct: 3
-                        },
-                        {
-                            text: "Que fait la balise &lt;em&gt; ?",
-                            options: [
-                                "Rend le texte plus grand",
-                                "Met le texte en emphase (italique)",
-                                "Ajoute un lien email",
-                                "Crée un élément média intégré"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer le plus petit titre ?",
-                            options: [
-                                "&lt;h1&gt;",
-                                "&lt;h6&gt;",
-                                "&lt;small&gt;",
-                                "&lt;heading&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle est la différence entre &lt;b&gt; et &lt;strong&gt; ?",
-                            options: [
-                                "Il n'y a pas de différence",
-                                "&lt;b&gt; est pour le gras, &lt;strong&gt; est pour le texte important",
-                                "&lt;b&gt; est obsolète, &lt;strong&gt; est l'alternative moderne",
-                                "&lt;b&gt; fonctionne dans tous les navigateurs, &lt;strong&gt; seulement dans les modernes"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer du texte souligné ?",
-                            options: [
-                                "&lt;underline&gt;",
-                                "&lt;u&gt;",
-                                "&lt;under&gt;",
-                                "&lt;ul&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Que fait la balise &lt;mark&gt; ?",
-                            options: [
-                                "Marque le texte comme important",
-                                "Surligne le texte avec une couleur de fond",
-                                "Crée un signet",
-                                "Ajoute un marqueur à une liste"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une règle horizontale ?",
-                            options: [
-                                "&lt;line&gt;",
-                                "&lt;hr&gt;",
-                                "&lt;rule&gt;",
-                                "&lt;hl&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Que représente la balise &lt;blockquote&gt; ?",
-                            options: [
-                                "Un bloc de code",
-                                "Une citation d'une autre source",
-                                "Un bloc de texte surligné",
-                                "Une section d'une page web"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour le texte en indice ?",
-                            options: [
-                                "&lt;sub&gt;",
-                                "&lt;subscript&gt;",
-                                "&lt;sup&gt;",
-                                "&lt;small&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Que crée la balise &lt;sup&gt; ?",
-                            options: [
-                                "Texte super important",
-                                "Texte en exposant",
-                                "Contenu supplémentaire",
-                                "Texte de qualité supérieure"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour définir une section de texte qui a été supprimée ?",
-                            options: [
-                                "&lt;delete&gt;",
-                                "&lt;del&gt;",
-                                "&lt;remove&gt;",
-                                "&lt;strike&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Que représente la balise &lt;ins&gt; ?",
-                            options: [
-                                "Une instruction",
-                                "Du texte inséré",
-                                "Un élément encastré",
-                                "Du contenu inspecté"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour définir du texte préformaté ?",
-                            options: [
-                                "&lt;pre&gt;",
-                                "&lt;code&gt;",
-                                "&lt;format&gt;",
-                                "&lt;text&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel est le but de la balise &lt;abbr&gt; ?",
-                            options: [
-                                "Créer une abréviation ou un acronyme",
-                                "Rendre le texte abstrait",
-                                "Créer une référence absolue",
-                                "Formater le texte comme anormal"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour définir une adresse ou des informations de contact ?",
-                            options: [
-                                "&lt;contact&gt;",
-                                "&lt;address&gt;",
-                                "&lt;info&gt;",
-                                "&lt;mail&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour afficher du code informatique ?",
-                            options: [
-                                "&lt;code&gt;",
-                                "&lt;pre&gt;",
-                                "&lt;script&gt;",
-                                "&lt;coding&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un paragraphe ?",
-                            options: [
-                                "&lt;para&gt;",
-                                "&lt;p&gt;",
-                                "&lt;paragraph&gt;",
-                                "&lt;text&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un saut de ligne sans créer un nouveau paragraphe ?",
-                            options: [
-                                "&lt;break&gt;",
-                                "&lt;lb&gt;",
-                                "&lt;br&gt;",
-                                "&lt;nl&gt;"
-                            ],
-                            correct: 2
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un espace insécable ?",
-                            options: [
-                                "&lt;space&gt;",
-                                "&lt;nbsp&gt;",
-                                "&amp;nbsp;",
-                                "&lt;nobreak&gt;"
-                            ],
-                            correct: 2
-                        }
-                    ]
-                }
+                question: "Quelle est la balise racine de tout document HTML?",
+                options: [
+                    "&lt;body&gt;",
+                    "&lt;html&gt;",
+                    "&lt;head&gt;",
+                    "&lt;!DOCTYPE&gt;"
+                ],
+                correct: 1,
+                explanation: "La balise &lt;html&gt; est la racine d'un document HTML et contient tous les autres éléments."
             },
             {
-                id: 2,
-                title: "Listes",
-                description: "Apprenez à créer des listes ordonnées, non ordonnées et de description",
-                icon: "📋",
-                quiz: {
-                    title: "Quiz sur les Listes HTML",
-                    questions: [
-                        {
-                            text: "Quelle balise est utilisée pour créer une liste non ordonnée ?",
-                            options: [
-                                "&lt;ul&gt;",
-                                "&lt;ol&gt;",
-                                "&lt;list&gt;",
-                                "&lt;li&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une liste ordonnée ?",
-                            options: [
-                                "&lt;ul&gt;",
-                                "&lt;ol&gt;",
-                                "&lt;list&gt;",
-                                "&lt;li&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise définit un élément de liste ?",
-                            options: [
-                                "&lt;ul&gt;",
-                                "&lt;ol&gt;",
-                                "&lt;list&gt;",
-                                "&lt;li&gt;"
-                            ],
-                            correct: 3
-                        },
-                        {
-                            text: "Quel est le style de puce par défaut pour les listes non ordonnées ?",
-                            options: [
-                                "Carré",
-                                "Cercle",
-                                "Disque",
-                                "Aucun"
-                            ],
-                            correct: 2
-                        },
-                        {
-                            text: "Quel attribut change le type de numérotation dans les listes ordonnées ?",
-                            options: [
-                                "type",
-                                "style",
-                                "number",
-                                "format"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur pour l'attribut 'type' crée des lettres minuscules dans les listes ordonnées ?",
-                            options: [
-                                "a",
-                                "A",
-                                "i",
-                                "1"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une liste de description ?",
-                            options: [
-                                "&lt;dl&gt;",
-                                "&lt;description&gt;",
-                                "&lt;dlist&gt;",
-                                "&lt;desc&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise définit un terme dans une liste de description ?",
-                            options: [
-                                "&lt;dt&gt;",
-                                "&lt;dd&gt;",
-                                "&lt;term&gt;",
-                                "&lt;def&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise définit une description dans une liste de description ?",
-                            options: [
-                                "&lt;dt&gt;",
-                                "&lt;dd&gt;",
-                                "&lt;desc&gt;",
-                                "&lt;definition&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Comment pouvez-vous créer une liste imbriquée en HTML ?",
-                            options: [
-                                "En plaçant une liste à l'intérieur d'un autre élément de liste",
-                                "En utilisant la balise &lt;nest&gt;",
-                                "En ajoutant l'attribut 'nested'",
-                                "HTML ne prend pas en charge les listes imbriquées"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut inverse la numérotation dans une liste ordonnée ?",
-                            options: [
-                                "reverse",
-                                "reversed",
-                                "backwards",
-                                "descending"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Que fait l'attribut 'start' dans les listes ordonnées ?",
-                            options: [
-                                "Commence la liste à un nombre spécifique",
-                                "Définit le point de départ de la liste",
-                                "Spécifie où la liste doit commencer",
-                                "Toutes ces réponses"
-                            ],
-                            correct: 3
-                        },
-                        {
-                            text: "Quelle propriété CSS change le style de puce des listes non ordonnées ?",
-                            options: [
-                                "bullet-style",
-                                "list-style-type",
-                                "marker-type",
-                                "list-bullet"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle est la bonne façon de créer une liste ordonnée en chiffres romains ?",
-                            options: [
-                                "&lt;ol type='I'&gt;",
-                                "&lt;ol style='roman'&gt;",
-                                "&lt;ol format='roman'&gt;",
-                                "&lt;ol numbers='roman'&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise HTML5 est utilisée pour représenter une liste de commandes ?",
-                            options: [
-                                "&lt;menu&gt;",
-                                "&lt;command&gt;",
-                                "&lt;cmd&gt;",
-                                "&lt;action&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'type' crée des chiffres dans les listes ordonnées ?",
-                            options: [
-                                "1",
-                                "number",
-                                "decimal",
-                                "num"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'type' crée des lettres majuscules dans les listes ordonnées ?",
-                            options: [
-                                "A",
-                                "a",
-                                "I",
-                                "i"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'type' crée des chiffres romains majuscules dans les listes ordonnées ?",
-                            options: [
-                                "I",
-                                "i",
-                                "R",
-                                "r"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'type' crée des chiffres romains minuscules dans les listes ordonnées ?",
-                            options: [
-                                "i",
-                                "I",
-                                "r",
-                                "R"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une liste de définitions ?",
-                            options: [
-                                "&lt;dl&gt;",
-                                "&lt;def&gt;",
-                                "&lt;definition&gt;",
-                                "&lt;dlist&gt;"
-                            ],
-                            correct: 0
-                        }
-                    ]
-                }
+                question: "Quelle balise est utilisée pour créer un titre de niveau 1?",
+                options: [
+                    "&lt;h1&gt;",
+                    "&lt;head&gt;",
+                    "&lt;header&gt;",
+                    "&lt;title&gt;"
+                ],
+                correct: 0,
+                explanation: "La balise &lt;h1&gt; est utilisée pour les titres de niveau 1, qui sont généralement les titres les plus importants de la page."
             },
             {
-                id: 3,
-                title: "Liens et Images",
-                description: "Apprenez à ajouter des hyperliens et des images à vos pages web",
-                icon: "🔗",
-                quiz: {
-                    title: "Quiz sur les Liens et Images",
-                    questions: [
-                        {
-                            text: "Quelle balise est utilisée pour créer un lien hypertexte ?",
-                            options: [
-                                "&lt;hyperlink&gt;",
-                                "&lt;a&gt;",
-                                "&lt;link&gt;",
-                                "&lt;href&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour spécifier l'URL d'un lien ?",
-                            options: [
-                                "src",
-                                "url",
-                                "href",
-                                "link"
-                            ],
-                            correct: 2
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour insérer une image ?",
-                            options: [
-                                "&lt;picture&gt;",
-                                "&lt;img&gt;",
-                                "&lt;image&gt;",
-                                "&lt;src&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quel attribut est obligatoire pour la balise &lt;img&gt; ?",
-                            options: [
-                                "src",
-                                "alt",
-                                "width",
-                                "height"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Que signifie l'attribut 'alt' dans une balise image ?",
-                            options: [
-                                "Texte alternatif affiché si l'image ne se charge pas",
-                                "Alignement du texte",
-                                "Lien alternatif",
-                                "Animation de l'image"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour ouvrir un lien dans un nouvel onglet ?",
-                            options: [
-                                "target",
-                                "new",
-                                "window",
-                                "tab"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'target' ouvre le lien dans un nouvel onglet ?",
-                            options: [
-                                "_new",
-                                "_blank",
-                                "_tab",
-                                "_window"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour spécifier la largeur d'une image ?",
-                            options: [
-                                "width",
-                                "size",
-                                "w",
-                                "large"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour spécifier la hauteur d'une image ?",
-                            options: [
-                                "height",
-                                "h",
-                                "size",
-                                "tall"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Comment créer un lien vers une adresse email ?",
-                            options: [
-                                "&lt;a href='email@example.com'&gt;",
-                                "&lt;a href='mailto:email@example.com'&gt;",
-                                "&lt;a email='email@example.com'&gt;",
-                                "&lt;a link='email@example.com'&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Comment créer un lien vers une section spécifique de la même page ?",
-                            options: [
-                                "&lt;a href='#section'&gt;",
-                                "&lt;a link='#section'&gt;",
-                                "&lt;a anchor='section'&gt;",
-                                "&lt;a id='section'&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour définir un identifiant unique pour un élément ?",
-                            options: [
-                                "id",
-                                "class",
-                                "name",
-                                "identifier"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Comment créer un lien qui télécharge un fichier ?",
-                            options: [
-                                "&lt;a href='file.pdf' download&gt;",
-                                "&lt;a href='file.pdf' save&gt;",
-                                "&lt;a href='file.pdf' get&gt;",
-                                "&lt;a href='file.pdf' load&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une zone cliquable dans une image ?",
-                            options: [
-                                "&lt;area&gt;",
-                                "&lt;map&gt;",
-                                "&lt;click&gt;",
-                                "&lt;hotspot&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour définir une image cliquable ?",
-                            options: [
-                                "&lt;map&gt;",
-                                "&lt;area&gt;",
-                                "&lt;imagemap&gt;",
-                                "&lt;clickmap&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour associer une image à une map ?",
-                            options: [
-                                "usemap",
-                                "map",
-                                "imagemap",
-                                "areamap"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle forme de zone cliquable peut être créée avec &lt;area&gt; ?",
-                            options: [
-                                "rectangle, cercle, polygone",
-                                "carré, ovale, triangle",
-                                "rond, carré, ligne",
-                                "cercle, triangle, hexagone"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour définir la forme d'une zone cliquable ?",
-                            options: [
-                                "shape",
-                                "form",
-                                "type",
-                                "area"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'shape' crée une zone rectangulaire ?",
-                            options: [
-                                "rect",
-                                "rectangle",
-                                "square",
-                                "box"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'shape' crée une zone circulaire ?",
-                            options: [
-                                "circle",
-                                "round",
-                                "circ",
-                                "oval"
-                            ],
-                            correct: 0
-                        }
-                    ]
-                }
+                question: "Quelle balise est utilisée pour créer un paragraphe?",
+                options: [
+                    "&lt;para&gt;",
+                    "&lt;p&gt;",
+                    "&lt;text&gt;",
+                    "&lt;paragraph&gt;"
+                ],
+                correct: 1,
+                explanation: "La balise &lt;p&gt; est utilisée pour définir un paragraphe de texte."
             },
             {
-                id: 4,
-                title: "Tableaux",
-                description: "Apprenez à créer et styliser des tableaux HTML",
-                icon: "📊",
-                quiz: {
-                    title: "Quiz sur les Tableaux HTML",
-                    questions: [
-                        {
-                            text: "Quelle balise est utilisée pour créer un tableau ?",
-                            options: [
-                                "&lt;table&gt;",
-                                "&lt;tab&gt;",
-                                "&lt;grid&gt;",
-                                "&lt;tbl&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise définit une ligne de tableau ?",
-                            options: [
-                                "&lt;row&gt;",
-                                "&lt;tr&gt;",
-                                "&lt;td&gt;",
-                                "&lt;th&gt;"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise définit une cellule de données normale dans un tableau ?",
-                            options: [
-                                "&lt;td&gt;",
-                                "&lt;cell&gt;",
-                                "&lt;data&gt;",
-                                "&lt;tc&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise définit une cellule d'en-tête dans un tableau ?",
-                            options: [
-                                "&lt;thead&gt;",
-                                "&lt;header&gt;",
-                                "&lt;th&gt;",
-                                "&lt;hd&gt;"
-                            ],
-                            correct: 2
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour regrouper l'en-tête du tableau ?",
-                            options: [
-                                "&lt;head&gt;",
-                                "&lt;header&gt;",
-                                "&lt;thead&gt;",
-                                "&lt;top&gt;"
-                            ],
-                            correct: 2
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour regrouper le corps du tableau ?",
-                            options: [
-                                "&lt;tbody&gt;",
-                                "&lt;body&gt;",
-                                "&lt;tbody&gt;",
-                                "&lt;main&gt;"
-                            ],
-                            correct: 2
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour regrouper le pied du tableau ?",
-                            options: [
-                                "&lt;tfoot&gt;",
-                                "&lt;footer&gt;",
-                                "&lt;bottom&gt;",
-                                "&lt;tfoot&gt;"
-                            ],
-                            correct: 3
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour fusionner des cellules horizontalement ?",
-                            options: [
-                                "colspan",
-                                "rowspan",
-                                "merge",
-                                "span"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour fusionner des cellules verticalement ?",
-                            options: [
-                                "colspan",
-                                "rowspan",
-                                "merge",
-                                "span"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour ajouter une légende à un tableau ?",
-                            options: [
-                                "&lt;caption&gt;",
-                                "&lt;legend&gt;",
-                                "&lt;title&gt;",
-                                "&lt;description&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut définit l'espacement entre les cellules d'un tableau ?",
-                            options: [
-                                "cellspacing",
-                                "cellpadding",
-                                "spacing",
-                                "padding"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut définit l'espace entre le contenu d'une cellule et ses bordures ?",
-                            options: [
-                                "cellspacing",
-                                "cellpadding",
-                                "spacing",
-                                "padding"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour ajouter une bordure à un tableau ?",
-                            options: [
-                                "border",
-                                "frame",
-                                "outline",
-                                "line"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'rules' affiche des bordures seulement entre les colonnes ?",
-                            options: [
-                                "cols",
-                                "columns",
-                                "groups",
-                                "rows"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour regrouper des colonnes dans un tableau ?",
-                            options: [
-                                "&lt;colgroup&gt;",
-                                "&lt;group&gt;",
-                                "&lt;columns&gt;",
-                                "&lt;cg&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour définir les propriétés des colonnes dans un tableau ?",
-                            options: [
-                                "&lt;col&gt;",
-                                "&lt;column&gt;",
-                                "&lt;c&gt;",
-                                "&lt;prop&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour aligner le contenu horizontalement dans une cellule ?",
-                            options: [
-                                "align",
-                                "valign",
-                                "horizontal",
-                                "x-align"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour aligner le contenu verticalement dans une cellule ?",
-                            options: [
-                                "align",
-                                "valign",
-                                "vertical",
-                                "y-align"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'align' centre le contenu horizontalement ?",
-                            options: [
-                                "center",
-                                "middle",
-                                "centre",
-                                "horizontal"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'valign' centre le contenu verticalement ?",
-                            options: [
-                                "center",
-                                "middle",
-                                "centre",
-                                "vertical"
-                            ],
-                            correct: 1
-                        }
-                    ]
-                }
+                question: "Quelle balise est utilisée pour créer une liste non ordonnée?",
+                options: [
+                    "&lt;ol&gt;",
+                    "&lt;ul&gt;",
+                    "&lt;li&gt;",
+                    "&lt;list&gt;"
+                ],
+                correct: 1,
+                explanation: "La balise &lt;ul&gt; est utilisée pour créer une liste non ordonnée (à puces)."
             },
             {
-                id: 5,
-                title: "Formulaires",
-                description: "Apprenez à créer des formulaires interactifs pour la saisie utilisateur",
-                icon: "📝",
-                quiz: {
-                    title: "Quiz sur les Formulaires HTML",
-                    questions: [
-                        {
-                            text: "Quelle balise est utilisée pour créer un formulaire ?",
-                            options: [
-                                "&lt;form&gt;",
-                                "&lt;input&gt;",
-                                "&lt;fieldset&gt;",
-                                "&lt;formulaire&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut spécifie où envoyer les données du formulaire ?",
-                            options: [
-                                "action",
-                                "method",
-                                "url",
-                                "target"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut spécifie comment envoyer les données du formulaire ?",
-                            options: [
-                                "action",
-                                "method",
-                                "type",
-                                "send"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle méthode HTTP est utilisée pour envoyer des données de formulaire visibles dans l'URL ?",
-                            options: [
-                                "POST",
-                                "GET",
-                                "SEND",
-                                "SUBMIT"
-                            ],
-                            correct: 1
-                        },
-                        {
-                            text: "Quelle méthode HTTP est utilisée pour envoyer des données de formulaire de manière sécurisée ?",
-                            options: [
-                                "POST",
-                                "GET",
-                                "SEND",
-                                "SUBMIT"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un champ de saisie de texte ?",
-                            options: [
-                                "&lt;input&gt;",
-                                "&lt;text&gt;",
-                                "&lt;textfield&gt;",
-                                "&lt;textarea&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut définit le type d'un élément &lt;input&gt; ?",
-                            options: [
-                                "type",
-                                "kind",
-                                "inputtype",
-                                "formtype"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'type' crée un champ de mot de passe ?",
-                            options: [
-                                "password",
-                                "secret",
-                                "hidden",
-                                "pwd"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'type' crée un bouton d'envoi ?",
-                            options: [
-                                "submit",
-                                "button",
-                                "send",
-                                "ok"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'type' crée une case à cocher ?",
-                            options: [
-                                "checkbox",
-                                "check",
-                                "radio",
-                                "option"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle valeur de l'attribut 'type' crée un bouton radio ?",
-                            options: [
-                                "radio",
-                                "button",
-                                "check",
-                                "option"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une zone de texte multiligne ?",
-                            options: [
-                                "&lt;textarea&gt;",
-                                "&lt;textbox&gt;",
-                                "&lt;multiline&gt;",
-                                "&lt;input type='textarea'&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une liste déroulante ?",
-                            options: [
-                                "&lt;select&gt;",
-                                "&lt;option&gt;",
-                                "&lt;dropdown&gt;",
-                                "&lt;list&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour définir une option dans une liste déroulante ?",
-                            options: [
-                                "&lt;option&gt;",
-                                "&lt;item&gt;",
-                                "&lt;choice&gt;",
-                                "&lt;select&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour grouper des options dans une liste déroulante ?",
-                            options: [
-                                "&lt;optgroup&gt;",
-                                "&lt;group&gt;",
-                                "&lt;optiongroup&gt;",
-                                "&lt;selectgroup&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut rend un champ de formulaire obligatoire ?",
-                            options: [
-                                "required",
-                                "mandatory",
-                                "necessary",
-                                "must"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut définit une valeur par défaut pour un champ de formulaire ?",
-                            options: [
-                                "value",
-                                "default",
-                                "initial",
-                                "content"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut définit un texte d'aide dans un champ de formulaire ?",
-                            options: [
-                                "placeholder",
-                                "help",
-                                "hint",
-                                "tip"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour associer un libellé à un élément de formulaire ?",
-                            options: [
-                                "&lt;label&gt;",
-                                "&lt;caption&gt;",
-                                "&lt;description&gt;",
-                                "&lt;title&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut est utilisé pour lier un libellé à un élément de formulaire ?",
-                            options: [
-                                "for",
-                                "id",
-                                "link",
-                                "connect"
-                            ],
-                            correct: 0
-                        }
-                    ]
-                }
+                question: "Quelle balise est utilisée pour créer un lien hypertexte?",
+                options: [
+                    "&lt;link&gt;",
+                    "&lt;a&gt;",
+                    "&lt;href&gt;",
+                    "&lt;hyperlink&gt;"
+                ],
+                correct: 1,
+                explanation: "La balise &lt;a&gt; (anchor) est utilisée pour créer des liens hypertextes. L'attribut 'href' spécifie l'URL de destination."
             },
             {
-                id: 6,
-                title: "HTML Sémantique",
-                description: "Apprenez à utiliser des balises sémantiques pour une meilleure structure et accessibilité",
-                icon: "🏗️",
-                quiz: {
-                    title: "Quiz sur le HTML Sémantique",
-                    questions: [
-                        {
-                            text: "Quelle balise sémantique représente le contenu principal d'un document ?",
-                            options: [
-                                "&lt;main&gt;",
-                                "&lt;content&gt;",
-                                "&lt;body&gt;",
-                                "&lt;primary&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente une section autonome dans un document ?",
-                            options: [
-                                "&lt;article&gt;",
-                                "&lt;section&gt;",
-                                "&lt;aside&gt;",
-                                "&lt;div&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente une section de contenu tangente ?",
-                            options: [
-                                "&lt;aside&gt;",
-                                "&lt;sidebar&gt;",
-                                "&lt;tangent&gt;",
-                                "&lt;extra&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente l'en-tête d'un document ou d'une section ?",
-                            options: [
-                                "&lt;header&gt;",
-                                "&lt;head&gt;",
-                                "&lt;top&gt;",
-                                "&lt;heading&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente le pied de page d'un document ou d'une section ?",
-                            options: [
-                                "&lt;footer&gt;",
-                                "&lt;bottom&gt;",
-                                "&lt;end&gt;",
-                                "&lt;foot&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente une section de navigation ?",
-                            options: [
-                                "&lt;nav&gt;",
-                                "&lt;navigation&gt;",
-                                "&lt;menu&gt;",
-                                "&lt;links&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente du contenu indépendant et autonome ?",
-                            options: [
-                                "&lt;article&gt;",
-                                "&lt;section&gt;",
-                                "&lt;content&gt;",
-                                "&lt;independent&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente une section thématique de contenu ?",
-                            options: [
-                                "&lt;section&gt;",
-                                "&lt;div&gt;",
-                                "&lt;theme&gt;",
-                                "&lt;topic&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente des détails que l'utilisateur peut afficher ou masquer ?",
-                            options: [
-                                "&lt;details&gt;",
-                                "&lt;summary&gt;",
-                                "&lt;toggle&gt;",
-                                "&lt;hide-show&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente un résumé ou une légende pour &lt;details&gt; ?",
-                            options: [
-                                "&lt;summary&gt;",
-                                "&lt;caption&gt;",
-                                "&lt;title&gt;",
-                                "&lt;legend&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente un contenu à part, comme une illustration ?",
-                            options: [
-                                "&lt;figure&gt;",
-                                "&lt;aside&gt;",
-                                "&lt;image&gt;",
-                                "&lt;illustration&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente une légende pour &lt;figure&gt; ?",
-                            options: [
-                                "&lt;figcaption&gt;",
-                                "&lt;caption&gt;",
-                                "&lt;legend&gt;",
-                                "&lt;description&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente le contenu le plus important de la page ?",
-                            options: [
-                                "&lt;main&gt;",
-                                "&lt;important&gt;",
-                                "&lt;primary&gt;",
-                                "&lt;content&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente des informations de contact ?",
-                            options: [
-                                "&lt;address&gt;",
-                                "&lt;contact&gt;",
-                                "&lt;info&gt;",
-                                "&lt;mail&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente du contenu mis en avant ?",
-                            options: [
-                                "&lt;mark&gt;",
-                                "&lt;highlight&gt;",
-                                "&lt;em&gt;",
-                                "&lt;strong&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente une citation courte en ligne ?",
-                            options: [
-                                "&lt;q&gt;",
-                                "&lt;cite&gt;",
-                                "&lt;quote&gt;",
-                                "&lt;citation&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente une citation de bloc ?",
-                            options: [
-                                "&lt;blockquote&gt;",
-                                "&lt;quote&gt;",
-                                "&lt;cite&gt;",
-                                "&lt;longquote&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente une définition ?",
-                            options: [
-                                "&lt;dfn&gt;",
-                                "&lt;def&gt;",
-                                "&lt;definition&gt;",
-                                "&lt;term&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente une abréviation ou un acronyme ?",
-                            options: [
-                                "&lt;abbr&gt;",
-                                "&lt;acronym&gt;",
-                                "&lt;short&gt;",
-                                "&lt;abbreviation&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise sémantique représente du code informatique ?",
-                            options: [
-                                "&lt;code&gt;",
-                                "&lt;programming&gt;",
-                                "&lt;script&gt;",
-                                "&lt;coding&gt;"
-                            ],
-                            correct: 0
-                        }
-                    ]
-                }
+                question: "Quel attribut est utilisé pour spécifier l'URL d'un lien?",
+                options: [
+                    "src",
+                    "url",
+                    "link",
+                    "href"
+                ],
+                correct: 3,
+                explanation: "L'attribut 'href' (hypertext reference) est utilisé dans la balise &lt;a&gt; pour spécifier l'URL de destination du lien."
             },
             {
-                id: 7,
-                title: "Multimédia",
-                description: "Apprenez à intégrer de l'audio, de la vidéo et d'autres médias",
-                icon: "🎬",
-                quiz: {
-                    title: "Quiz sur le Multimédia HTML",
-                    questions: [
-                        {
-                            text: "Quelle balise est utilisée pour intégrer une vidéo ?",
-                            options: [
-                                "&lt;video&gt;",
-                                "&lt;movie&gt;",
-                                "&lt;media&gt;",
-                                "&lt;clip&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour intégrer un fichier audio ?",
-                            options: [
-                                "&lt;audio&gt;",
-                                "&lt;sound&gt;",
-                                "&lt;music&gt;",
-                                "&lt;mp3&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut spécifie que la vidéo doit être lue automatiquement ?",
-                            options: [
-                                "autoplay",
-                                "auto",
-                                "play",
-                                "start"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut spécifie que les contrôles de lecture doivent être affichés ?",
-                            options: [
-                                "controls",
-                                "player",
-                                "interface",
-                                "display"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut spécifie que la vidéo doit être lue en boucle ?",
-                            options: [
-                                "loop",
-                                "repeat",
-                                "cycle",
-                                "again"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut spécifie une image à afficher avant la lecture de la vidéo ?",
-                            options: [
-                                "poster",
-                                "image",
-                                "preview",
-                                "thumb"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour spécifier des sources multiples pour un élément média ?",
-                            options: [
-                                "&lt;source&gt;",
-                                "&lt;src&gt;",
-                                "&lt;media&gt;",
-                                "&lt;file&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut de &lt;source&gt; spécifie l'URL du fichier média ?",
-                            options: [
-                                "src",
-                                "url",
-                                "file",
-                                "link"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut de &lt;source&gt; spécifie le type MIME du fichier ?",
-                            options: [
-                                "type",
-                                "mime",
-                                "format",
-                                "media"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour intégrer du contenu externe ?",
-                            options: [
-                                "&lt;embed&gt;",
-                                "&lt;external&gt;",
-                                "&lt;object&gt;",
-                                "&lt;include&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour intégrer des applications ou du contenu interactif ?",
-                            options: [
-                                "&lt;object&gt;",
-                                "&lt;app&gt;",
-                                "&lt;interactive&gt;",
-                                "&lt;program&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour intégrer des applets Java ?",
-                            options: [
-                                "&lt;applet&gt;",
-                                "&lt;java&gt;",
-                                "&lt;program&gt;",
-                                "&lt;script&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour intégrer des fichiers PDF ?",
-                            options: [
-                                "&lt;embed&gt;",
-                                "&lt;pdf&gt;",
-                                "&lt;document&gt;",
-                                "&lt;file&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour intégrer des applications Flash ?",
-                            options: [
-                                "&lt;embed&gt;",
-                                "&lt;flash&gt;",
-                                "&lt;swf&gt;",
-                                "&lt;animation&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel format vidéo est largement supporté par tous les navigateurs modernes ?",
-                            options: [
-                                "MP4",
-                                "AVI",
-                                "MOV",
-                                "WMV"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel format audio est largement supporté par tous les navigateurs modernes ?",
-                            options: [
-                                "MP3",
-                                "WAV",
-                                "OGG",
-                                "MP3 et WAV"
-                            ],
-                            correct: 3
-                        },
-                        {
-                            text: "Quel attribut rend la vidéo muette par défaut ?",
-                            options: [
-                                "muted",
-                                "silent",
-                                "nomusic",
-                                "quiet"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut spécifie la largeur de l'élément vidéo ?",
-                            options: [
-                                "width",
-                                "size",
-                                "w",
-                                "large"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quel attribut spécifie la hauteur de l'élément vidéo ?",
-                            options: [
-                                "height",
-                                "h",
-                                "size",
-                                "tall"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour fournir des sous-titres pour une vidéo ?",
-                            options: [
-                                "&lt;track&gt;",
-                                "&lt;caption&gt;",
-                                "&lt;subtitle&gt;",
-                                "&lt;text&gt;"
-                            ],
-                            correct: 0
-                        }
-                    ]
-                }
+                question: "Quelle balise est utilisée pour insérer une image?",
+                options: [
+                    "&lt;img&gt;",
+                    "&lt;image&gt;",
+                    "&lt;pic&gt;",
+                    "&lt;src&gt;"
+                ],
+                correct: 0,
+                explanation: "La balise &lt;img&gt; est utilisée pour insérer une image dans une page HTML. L'attribut 'src' spécifie le chemin de l'image."
             },
             {
-                id: 8,
-                title: "HTML Avancé",
-                description: "Découvrez les API HTML5 et les fonctionnalités avancées",
-                icon: "⚡",
-                quiz: {
-                    title: "Quiz sur le HTML Avancé",
-                    questions: [
-                        {
-                            text: "Quelle API permet de stocker des données localement dans le navigateur ?",
-                            options: [
-                                "Web Storage API",
-                                "Local Data API",
-                                "Browser Storage API",
-                                "Client Storage API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle méthode est utilisée pour stocker des données dans le localStorage ?",
-                            options: [
-                                "setItem()",
-                                "saveItem()",
-                                "storeItem()",
-                                "putItem()"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle méthode est utilisée pour récupérer des données du localStorage ?",
-                            options: [
-                                "getItem()",
-                                "retrieveItem()",
-                                "fetchItem()",
-                                "loadItem()"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet de déterminer la position géographique de l'utilisateur ?",
-                            options: [
-                                "Geolocation API",
-                                "Location API",
-                                "GPS API",
-                                "Position API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet de créer des applications web qui fonctionnent hors ligne ?",
-                            options: [
-                                "Service Workers",
-                                "Offline API",
-                                "Cache API",
-                                "Web Workers"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet d'exécuter du JavaScript en arrière-plan ?",
-                            options: [
-                                "Web Workers",
-                                "Background API",
-                                "Thread API",
-                                "Parallel API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet d'accéder à l'appareil photo de l'utilisateur ?",
-                            options: [
-                                "MediaDevices API",
-                                "Camera API",
-                                "Photo API",
-                                "Image API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet de dessiner des graphiques en 2D sur une page web ?",
-                            options: [
-                                "Canvas API",
-                                "Graphics API",
-                                "Draw API",
-                                "2D API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet de créer des graphiques vectoriels évolutifs ?",
-                            options: [
-                                "SVG",
-                                "Vector API",
-                                "Graphics API",
-                                "Canvas API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet de faire glisser et déposer des éléments ?",
-                            options: [
-                                "Drag and Drop API",
-                                "Move API",
-                                "Transfer API",
-                                "Shift API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet de gérer l'historique du navigateur ?",
-                            options: [
-                                "History API",
-                                "Browser API",
-                                "Navigation API",
-                                "Back API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle méthode de l'History API ajoute une entrée à l'historique ?",
-                            options: [
-                                "pushState()",
-                                "addState()",
-                                "createState()",
-                                "insertState()"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet aux applications web d'envoyer des notifications ?",
-                            options: [
-                                "Notifications API",
-                                "Alert API",
-                                "Message API",
-                                "Popup API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet d'accéder au presse-papiers du système ?",
-                            options: [
-                                "Clipboard API",
-                                "Copy API",
-                                "Paste API",
-                                "Text API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet de détecter la connexion réseau de l'utilisateur ?",
-                            options: [
-                                "Network Information API",
-                                "Connection API",
-                                "Online API",
-                                "Web API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet de vibrer l'appareil mobile ?",
-                            options: [
-                                "Vibration API",
-                                "Shake API",
-                                "Buzz API",
-                                "Mobile API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet d'accéder à la batterie de l'appareil ?",
-                            options: [
-                                "Battery API",
-                                "Power API",
-                                "Energy API",
-                                "Charge API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet de détecter l'orientation de l'appareil ?",
-                            options: [
-                                "Device Orientation API",
-                                "Position API",
-                                "Tilt API",
-                                "Move API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet de détecter le mouvement de l'appareil ?",
-                            options: [
-                                "Device Motion API",
-                                "Movement API",
-                                "Acceleration API",
-                                "Motion API"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle API permet de partager du contenu avec d'autres applications ?",
-                            options: [
-                                "Web Share API",
-                                "Share API",
-                                "Social API",
-                                "Content API"
-                            ],
-                            correct: 0
-                        }
-                    ]
-                }
+                question: "Quelle est la structure de base correcte d'un document HTML?",
+                options: [
+                    "&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;",
+                    "&lt;head&gt;&lt;html&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;&lt;/head&gt;",
+                    "&lt;body&gt;&lt;head&gt;&lt;/head&gt;&lt;html&gt;&lt;/html&gt;&lt;/body&gt;",
+                    "&lt;html&gt;&lt;body&gt;&lt;/body&gt;&lt;head&gt;&lt;/head&gt;&lt;/html&gt;"
+                ],
+                correct: 0,
+                explanation: "La structure correcte est: &lt;html&gt; contenant &lt;head&gt; et &lt;body&gt;, dans cet ordre."
             },
             {
-                id: 9,
-                title: "Projet Final",
-                description: "Appliquez tout ce que vous avez appris dans un projet complet",
-                icon: "🎓",
-                quiz: {
-                    title: "Quiz Final sur le HTML",
-                    questions: [
-                        {
-                            text: "Quelle balise est utilisée pour définir la structure principale d'un document HTML5 ?",
-                            options: [
-                                "&lt;html&gt;",
-                                "&lt;document&gt;",
-                                "&lt;web&gt;",
-                                "&lt;page&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un lien vers une adresse email ?",
-                            options: [
-                                "&lt;a href='mailto:email@example.com'&gt;",
-                                "&lt;a href='email@example.com'&gt;",
-                                "&lt;a email='email@example.com'&gt;",
-                                "&lt;a link='email@example.com'&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un tableau avec en-têtes ?",
-                            options: [
-                                "&lt;table&gt; avec &lt;th&gt;",
-                                "&lt;table&gt; avec &lt;thead&gt;",
-                                "&lt;table&gt; avec &lt;header&gt;",
-                                "&lt;table&gt; avec &lt;tr&gt; et &lt;td&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un formulaire avec validation ?",
-                            options: [
-                                "&lt;form&gt; avec attributs de validation",
-                                "&lt;input&gt; avec validation",
-                                "&lt;validate&gt;",
-                                "&lt;check&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour intégrer une vidéo avec contrôles ?",
-                            options: [
-                                "&lt;video controls&gt;",
-                                "&lt;video player&gt;",
-                                "&lt;video with-controls&gt;",
-                                "&lt;media controls&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une section de navigation ?",
-                            options: [
-                                "&lt;nav&gt;",
-                                "&lt;navigation&gt;",
-                                "&lt;menu&gt;",
-                                "&lt;links&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un en-tête de document ?",
-                            options: [
-                                "&lt;header&gt;",
-                                "&lt;head&gt;",
-                                "&lt;top&gt;",
-                                "&lt;heading&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un pied de page ?",
-                            options: [
-                                "&lt;footer&gt;",
-                                "&lt;bottom&gt;",
-                                "&lt;end&gt;",
-                                "&lt;foot&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un contenu principal ?",
-                            options: [
-                                "&lt;main&gt;",
-                                "&lt;content&gt;",
-                                "&lt;primary&gt;",
-                                "&lt;body&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un article autonome ?",
-                            options: [
-                                "&lt;article&gt;",
-                                "&lt;section&gt;",
-                                "&lt;content&gt;",
-                                "&lt;post&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une section thématique ?",
-                            options: [
-                                "&lt;section&gt;",
-                                "&lt;div&gt;",
-                                "&lt;theme&gt;",
-                                "&lt;topic&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un contenu à part ?",
-                            options: [
-                                "&lt;aside&gt;",
-                                "&lt;sidebar&gt;",
-                                "&lt;extra&gt;",
-                                "&lt;additional&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer des détails dépliables ?",
-                            options: [
-                                "&lt;details&gt;",
-                                "&lt;summary&gt;",
-                                "&lt;toggle&gt;",
-                                "&lt;expand&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une illustration avec légende ?",
-                            options: [
-                                "&lt;figure&gt; et &lt;figcaption&gt;",
-                                "&lt;image&gt; et &lt;caption&gt;",
-                                "&lt;pic&gt; et &lt;text&gt;",
-                                "&lt;img&gt; et &lt;description&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une barre de progression ?",
-                            options: [
-                                "&lt;progress&gt;",
-                                "&lt;bar&gt;",
-                                "&lt;meter&gt;",
-                                "&lt;load&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une jauge ?",
-                            options: [
-                                "&lt;meter&gt;",
-                                "&lt;gauge&gt;",
-                                "&lt;measure&gt;",
-                                "&lt;value&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer une boîte de dialogue ?",
-                            options: [
-                                "&lt;dialog&gt;",
-                                "&lt;popup&gt;",
-                                "&lt;modal&gt;",
-                                "&lt;window&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un modèle réutilisable ?",
-                            options: [
-                                "&lt;template&gt;",
-                                "&lt;model&gt;",
-                                "&lt;pattern&gt;",
-                                "&lt;reuse&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un slot dans un template ?",
-                            options: [
-                                "&lt;slot&gt;",
-                                "&lt;hole&gt;",
-                                "&lt;placeholder&gt;",
-                                "&lt;empty&gt;"
-                            ],
-                            correct: 0
-                        },
-                        {
-                            text: "Quelle balise est utilisée pour créer un élément personnalisé ?",
-                            options: [
-                                "Toutes les balises personnalisées",
-                                "&lt;custom&gt;",
-                                "&lt;element&gt;",
-                                "&lt;widget&gt;"
-                            ],
-                            correct: 0
-                        }
-                    ]
-                }
+                question: "Quelle balise est utilisée pour définir le titre de la page (affiché dans l'onglet du navigateur)?",
+                options: [
+                    "&lt;h1&gt;",
+                    "&lt;header&gt;",
+                    "&lt;title&gt;",
+                    "&lt;head&gt;"
+                ],
+                correct: 2,
+                explanation: "La balise &lt;title&gt; à l'intérieur de &lt;head&gt; définit le titre de la page qui s'affiche dans l'onglet du navigateur."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer un saut de ligne?",
+                options: [
+                    "&lt;break&gt;",
+                    "&lt;lb&gt;",
+                    "&lt;br&gt;",
+                    "&lt;newline&gt;"
+                ],
+                correct: 2,
+                explanation: "La balise &lt;br&gt; est utilisée pour créer un saut de ligne dans le texte."
+            },
+            {
+                question: "Quel attribut est utilisé pour fournir un texte alternatif pour une image?",
+                options: [
+                    "title",
+                    "src",
+                    "alt",
+                    "description"
+                ],
+                correct: 2,
+                explanation: "L'attribut 'alt' fournit un texte alternatif pour une image, qui s'affiche si l'image ne peut pas être chargée."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer une liste ordonnée?",
+                options: [
+                    "&lt;ul&gt;",
+                    "&lt;ol&gt;",
+                    "&lt;li&gt;",
+                    "&lt;list&gt;"
+                ],
+                correct: 1,
+                explanation: "La balise &lt;ol&gt; est utilisée pour créer une liste ordonnée (numérotée)."
+            },
+            {
+                question: "Quelle balise est utilisée pour mettre en gras un texte?",
+                options: [
+                    "&lt;bold&gt;",
+                    "&lt;strong&gt;",
+                    "&lt;b&gt;",
+                    "&lt;em&gt;"
+                ],
+                correct: 1,
+                explanation: "La balise &lt;strong&gt; est utilisée pour indiquer que le texte a une importance particulière, et est généralement affiché en gras."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer un formulaire?",
+                options: [
+                    "&lt;form&gt;",
+                    "&lt;input&gt;",
+                    "&lt;submit&gt;",
+                    "&lt;fieldset&gt;"
+                ],
+                correct: 0,
+                explanation: "La balise &lt;form&gt; est utilisée pour créer un formulaire HTML pour la saisie des utilisateurs."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer une case à cocher?",
+                options: [
+                    "&lt;input type='text'&gt;",
+                    "&lt;input type='checkbox'&gt;",
+                    "&lt;input type='radio'&gt;",
+                    "&lt;check&gt;"
+                ],
+                correct: 1,
+                explanation: "&lt;input type='checkbox'&gt; est utilisé pour créer une case à cocher dans un formulaire."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer un tableau?",
+                options: [
+                    "&lt;table&gt;",
+                    "&lt;tab&gt;",
+                    "&lt;grid&gt;",
+                    "&lt;tr&gt;"
+                ],
+                correct: 0,
+                explanation: "La balise &lt;table&gt; est utilisée pour créer un tableau HTML."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer une ligne dans un tableau?",
+                options: [
+                    "&lt;td&gt;",
+                    "&lt;tr&gt;",
+                    "&lt;th&gt;",
+                    "&lt;row&gt;"
+                ],
+                correct: 1,
+                explanation: "La balise &lt;tr&gt; est utilisée pour créer une ligne dans un tableau HTML."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer une cellule d'en-tête dans un tableau?",
+                options: [
+                    "&lt;td&gt;",
+                    "&lt;th&gt;",
+                    "&lt;header&gt;",
+                    "&lt;thead&gt;"
+                ],
+                correct: 1,
+                explanation: "La balise &lt;th&gt; est utilisée pour créer une cellule d'en-tête dans un tableau HTML."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer un pied de page?",
+                options: [
+                    "&lt;bottom&gt;",
+                    "&lt;footer&gt;",
+                    "&lt;foot&gt;",
+                    "&lt;end&gt;"
+                ],
+                correct: 1,
+                explanation: "La balise &lt;footer&gt; est utilisée pour définir un pied de page pour un document ou une section."
             }
         ];
 
-        // Current module state
-        let currentModule = 0;
-        let completedModules = JSON.parse(localStorage.getItem('completedModules')) || [];
-        let unlockedModules = JSON.parse(localStorage.getItem('unlockedModules')) || [0]; // Module 0 is always unlocked
-
-        // Initialize the application
-        function init() {
-            renderModuleList();
-            loadModule(currentModule);
-            updateProgress();
-        }
-
-        // Render the module list in the sidebar
-        function renderModuleList() {
-            const moduleList = document.getElementById('module-list');
-            moduleList.innerHTML = '';
-            
-            modules.forEach((module, index) => {
-                const isCompleted = completedModules.includes(module.id);
-                const isActive = currentModule === index;
-                const isUnlocked = unlockedModules.includes(module.id);
-                
-                const moduleItem = document.createElement('li');
-                moduleItem.className = `module-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''} ${!isUnlocked ? 'locked' : ''}`;
-                moduleItem.innerHTML = `
-                    <span class="module-icon">${module.icon}</span>
-                    <span>${module.title}</span>
-                    ${isCompleted ? '<span style="margin-left: auto;">✓</span>' : ''}
-                    ${!isUnlocked ? '<span style="margin-left: auto;">🔒</span>' : ''}
-                `;
-                
-                if (isUnlocked) {
-                    moduleItem.addEventListener('click', () => {
-                        currentModule = index;
-                        loadModule(currentModule);
-                        renderModuleList();
-                    });
-                }
-                
-                moduleList.appendChild(moduleItem);
-            });
-        }
-
-        // Load a module into the content area
-        function loadModule(moduleIndex) {
-            const module = modules[moduleIndex];
-            document.getElementById('module-title').textContent = module.title;
-            document.getElementById('module-description').textContent = module.description;
-            
-            const moduleContent = document.getElementById('module-content');
-            
-            // Check if module is unlocked
-            if (!unlockedModules.includes(module.id)) {
-                moduleContent.innerHTML = `
-                    <div class="locked-message">
-                        <h3>Module Verrouillé 🔒</h3>
-                        <p>Vous devez terminer le module précédent pour déverrouiller celui-ci.</p>
-                        <p>Réussissez le quiz du module précédent avec un score de 70% ou plus pour continuer.</p>
-                    </div>
-                `;
-                return;
+        // Fonction pour mélanger un tableau (algorithme de Fisher-Yates)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
-            
-            // Load quiz content
-            moduleContent.innerHTML = `
-                <div class="quiz-container">
-                    <h3 class="quiz-title">${module.quiz.title}</h3>
-                    <div id="quiz-content">
-                        ${renderQuiz(module.quiz)}
-                    </div>
-                </div>
-                
-                <div class="completion-message" id="completion-message-${module.id}">
-                    <h3>Quiz Terminé! 🎉</h3>
-                    <p>Vous avez terminé avec succès le quiz "${module.title}".</p>
-                    <button class="complete-btn" onclick="completeModule(${module.id})">Marquer comme Terminé</button>
-                </div>
-            `;
+            return array;
         }
 
-        // Render a quiz
-        function renderQuiz(quiz) {
-            let html = '';
+        // Variables d'état du quiz
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let timeLeft = 15 * 60; // 20 minutes en secondes
+        let timerInterval;
+        let questions = [];
+
+        // Éléments DOM
+        const questionContainer = document.getElementById('question-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreValue = document.getElementById('score-value');
+        const resultMessage = document.getElementById('result-message');
+        const feedbackContainer = document.getElementById('feedback-container');
+        const restartBtn = document.getElementById('restart-btn');
+        const timerElement = document.getElementById('timer');
+
+        // Initialisation du quiz
+        function initQuiz() {
+            // Mélanger les questions
+            questions = shuffleArray([...originalQuestions]);
             
-            quiz.questions.forEach((question, index) => {
-                html += `
-                    <div class="question">
-                        <div class="question-text">${index + 1}. ${question.text}</div>
-                        <div class="options">
-                            ${question.options.map((option, optIndex) => `
-                                <div class="option">
-                                    <input type="radio" name="q${index}" value="${optIndex}" id="q${index}o${optIndex}">
-                                    <label for="q${index}o${optIndex}">${option}</label>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <div class="feedback" id="feedback-q${index}"></div>
+            // Initialiser le tableau des réponses utilisateur
+            userAnswers = new Array(questions.length).fill(null);
+            
+            showQuestion(currentQuestion);
+            updateProgressBar();
+            updateNavigationButtons();
+            startTimer();
+        }
+
+        // Afficher une question
+        function showQuestion(index) {
+            const question = questions[index];
+            const letters = ['A', 'B', 'C', 'D'];
+            
+            let optionsHTML = '';
+            question.options.forEach((option, i) => {
+                const isSelected = userAnswers[index] === i;
+                optionsHTML += `
+                    <div class="option ${isSelected ? 'selected' : ''}" data-index="${i}">
+                        <div class="option-letter">${letters[i]}</div>
+                        <div class="option-text">${option}</div>
                     </div>
                 `;
             });
             
-            html += `<button class="check-answers" onclick="checkQuiz(${currentModule})">Vérifier les Réponses</button>`;
-            html += `<div class="results" id="quiz-results-${currentModule}"></div>`;
+            questionContainer.innerHTML = `
+                <div class="question-number">
+                    <i class="fas fa-question-circle"></i>
+                    Question ${index + 1} sur ${questions.length}
+                </div>
+                <div class="question-text">${question.question}</div>
+                <div class="options-container">${optionsHTML}</div>
+            `;
             
-            return html;
+            // Ajouter les écouteurs d'événements aux options
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    selectOption(this, index);
+                });
+            });
         }
 
-        // Check quiz answers
-        function checkQuiz(moduleIndex) {
-            const module = modules[moduleIndex];
-            const quiz = module.quiz;
+        // Sélectionner une option
+        function selectOption(optionElement, questionIndex) {
+            // Désélectionner toutes les options de cette question
+            document.querySelectorAll(`.option`).forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Sélectionner l'option cliquée
+            optionElement.classList.add('selected');
+            
+            // Enregistrer la réponse de l'utilisateur
+            const selectedIndex = parseInt(optionElement.getAttribute('data-index'));
+            userAnswers[questionIndex] = selectedIndex;
+            
+            // Mettre à jour les boutons de navigation
+            updateNavigationButtons();
+        }
+
+        // Mettre à jour la barre de progression
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Mettre à jour les boutons de navigation
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'flex';
+                submitBtn.disabled = userAnswers[currentQuestion] === null;
+            } else {
+                nextBtn.style.display = 'flex';
+                submitBtn.style.display = 'none';
+                nextBtn.disabled = userAnswers[currentQuestion] === null;
+            }
+        }
+
+        // Démarrer le minuteur
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+            }, 1000);
+        }
+
+        // Mettre à jour l'affichage du minuteur
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Changer la couleur lorsque le temps est presque écoulé
+            if (timeLeft < 300) { // 5 minutes
+                timerElement.style.color = 'var(--danger)';
+            }
+        }
+
+        // Aller à la question précédente
+        prevBtn.addEventListener('click', function() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+                updateProgressBar();
+                updateNavigationButtons();
+            }
+        });
+
+        // Aller à la question suivante
+        nextBtn.addEventListener('click', function() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                updateProgressBar();
+                updateNavigationButtons();
+            }
+        });
+
+        // Soumettre le quiz
+        submitBtn.addEventListener('click', function() {
+            clearInterval(timerInterval);
+            showResults();
+        });
+
+        // Afficher les résultats
+        function showResults() {
+            // Calculer le score
             let score = 0;
-            const totalQuestions = quiz.questions.length;
-            const passingScore = Math.ceil(totalQuestions * 0.7); // 70% required to pass
-            
-            // Check each question
-            quiz.questions.forEach((question, index) => {
-                const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
-                const feedback = document.getElementById(`feedback-q${index}`);
-                
-                if (selectedOption) {
-                    if (parseInt(selectedOption.value) === question.correct) {
-                        feedback.textContent = "Correct! Bien joué.";
-                        feedback.className = "feedback correct";
-                        score++;
-                    } else {
-                        feedback.textContent = "Incorrect. La bonne réponse est: " + question.options[question.correct];
-                        feedback.className = "feedback incorrect";
-                    }
-                } else {
-                    feedback.textContent = "Veuillez sélectionner une réponse.";
-                    feedback.className = "feedback incorrect";
+            questions.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    score++;
                 }
             });
             
-            // Display results
-            const results = document.getElementById(`quiz-results-${moduleIndex}`);
-            const percentage = Math.round((score / totalQuestions) * 100);
+            // Mettre à jour le score dans le cercle
+            scoreValue.textContent = score;
             
-            results.innerHTML = `
-                <h3>Résultats du Quiz</h3>
-                <p>Vous avez obtenu ${score} sur ${totalQuestions} (${percentage}%).</p>
-                <p>${score >= passingScore ? 
-                    `Félicitations! Vous avez réussi le quiz avec ${percentage}%.` : 
-                    `Vous avez besoin d'au moins ${Math.ceil(passingScore)} bonnes réponses (70%) pour réussir. Continuez à étudier!`}</p>
-            `;
-            results.style.display = 'block';
+            // Mettre à jour le dégradé du cercle de score
+            const percentage = (score / questions.length) * 100;
+            document.querySelector('.score-circle').style.background = 
+                `conic-gradient(var(--success) 0% ${percentage}%, #e9ecef ${percentage}% 100%)`;
             
-            // Show completion message if passing score is achieved
-            if (score >= passingScore) {
-                document.getElementById(`completion-message-${moduleIndex}`).style.display = 'block';
-                
-                // Unlock next module if it exists
-                if (moduleIndex < modules.length - 1) {
-                    const nextModuleId = modules[moduleIndex + 1].id;
-                    if (!unlockedModules.includes(nextModuleId)) {
-                        unlockedModules.push(nextModuleId);
-                        localStorage.setItem('unlockedModules', JSON.stringify(unlockedModules));
-                    }
-                }
+            // Afficher un message en fonction du score
+            let message = '';
+            if (score === questions.length) {
+                message = "Félicitations! Vous maîtrisez parfaitement les bases du HTML! 🎉";
+            } else if (score >= questions.length * 0.8) {
+                message = "Excellent travail! Vous avez une très bonne compréhension du HTML!";
+            } else if (score >= questions.length * 0.6) {
+                message = "Bon travail! Vous connaissez les bases du HTML, mais vous pouvez encore vous améliorer.";
+            } else {
+                message = "Continuez à pratiquer! Réviser les bases du HTML vous aidera à progresser.";
             }
-        }
-
-        // Mark a module as completed
-        function completeModule(moduleId) {
-            if (!completedModules.includes(moduleId)) {
-                completedModules.push(moduleId);
-                localStorage.setItem('completedModules', JSON.stringify(completedModules));
-                updateProgress();
-                renderModuleList();
+            resultMessage.textContent = message;
+            
+            // Afficher les feedbacks pour chaque question
+            feedbackContainer.innerHTML = '';
+            questions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.correct;
+                const letters = ['A', 'B', 'C', 'D'];
                 
-                // Move to next module if available and unlocked
-                if (currentModule < modules.length - 1) {
-                    const nextModuleId = modules[currentModule + 1].id;
-                    if (unlockedModules.includes(nextModuleId)) {
-                        currentModule++;
-                        loadModule(currentModule);
-                        renderModuleList();
-                    }
+                const feedbackItem = document.createElement('div');
+                feedbackItem.className = `feedback-item ${isCorrect ? 'correct' : 'incorrect'}`;
+                
+                let userAnswerText = 'Aucune réponse';
+                if (userAnswer !== null) {
+                    userAnswerText = `${letters[userAnswer]}. ${question.options[userAnswer]}`;
                 }
-            }
+                
+                const correctAnswerText = `${letters[question.correct]}. ${question.options[question.correct]}`;
+                
+                feedbackItem.innerHTML = `
+                    <div class="feedback-question">
+                        <i class="fas fa-question"></i>
+                        <span>Question ${index + 1}: ${question.question}</span>
+                    </div>
+                    <div class="feedback-answer ${isCorrect ? 'correct-answer' : 'incorrect-answer'}">
+                        <i class="fas ${isCorrect ? 'fa-check' : 'fa-times'}"></i>
+                        <span>Votre réponse: ${userAnswerText}</span>
+                    </div>
+                    ${!isCorrect ? `
+                        <div class="feedback-answer correct-answer">
+                            <i class="fas fa-check"></i>
+                            <span>Réponse correcte: ${correctAnswerText}</span>
+                        </div>
+                    ` : ''}
+                    <div class="feedback-explanation">
+                        <i class="fas fa-lightbulb"></i>
+                        ${question.explanation}
+                    </div>
+                `;
+                
+                feedbackContainer.appendChild(feedbackItem);
+            });
+            
+            // Afficher les résultats et masquer le quiz
+            document.querySelector('.quiz-body').style.display = 'none';
+            resultsContainer.style.display = 'block';
         }
 
-        // Update progress bar and text
-        function updateProgress() {
-            const progress = (completedModules.length / modules.length) * 100;
-            document.getElementById('progress-bar').style.width = `${progress}%`;
-            document.getElementById('progress-text').textContent = `${Math.round(progress)}% Terminé`;
-            document.getElementById('module-count').textContent = `${completedModules.length}/${modules.length} Modules`;
-        }
+        // Redémarrer le quiz
+        restartBtn.addEventListener('click', function() {
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            timeLeft = 15 * 60;
+            
+            document.querySelector('.quiz-body').style.display = 'flex';
+            resultsContainer.style.display = 'none';
+            
+            // Réinitialiser le minuteur
+            timerElement.style.color = 'var(--gray)';
+            
+            // Mélanger à nouveau les questions pour un nouvel ordre aléatoire
+            initQuiz();
+        });
 
-        // Initialize the application when the page loads
-        window.onload = init;
+        // Initialiser le quiz au chargement de la page
+        document.addEventListener('DOMContentLoaded', initQuiz);
     </script>
 </body>
 </html>
