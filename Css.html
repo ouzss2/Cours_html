@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 2</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --warning: #ffcc00;
+            --danger: #dc3545;
+            --gray: #6c757d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .quiz-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .quiz-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .quiz-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .quiz-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .quiz-progress {
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-top: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+        
+        .quiz-body {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            min-height: 500px;
+        }
+        
+        .question-container {
+            flex-grow: 1;
+        }
+        
+        .question-number {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .question-number i {
+            color: var(--primary);
+        }
+        
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .option {
+            padding: 18px 20px;
+            background-color: var(--light);
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .option:hover {
+            border-color: var(--primary);
+            background-color: #f0f4ff;
+            transform: translateY(-2px);
+        }
+        
+        .option.selected {
+            border-color: var(--primary);
+            background-color: #e6eeff;
+            box-shadow: 0 2px 8px rgba(67, 97, 238, 0.2);
+        }
+        
+        .option-letter {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+        
+        .option.selected .option-letter {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-prev {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .btn-prev:hover:not(:disabled) {
+            background-color: #e2e6ea;
+        }
+        
+        .btn-next, .btn-submit {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-next:hover:not(:disabled), .btn-submit:hover:not(:disabled) {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-restart {
+            background-color: var(--success);
+            color: white;
+            margin: 20px auto 0;
+        }
+        
+        .btn-restart:hover {
+            background-color: #3a9c35;
+            transform: translateY(-2px);
+        }
+        
+        .results-container {
+            text-align: center;
+            padding: 40px 30px;
+            display: none;
+        }
+        
+        .results-header {
+            margin-bottom: 30px;
+        }
+        
+        .results-header h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: conic-gradient(var(--success) 0% 70%, #e9ecef 70% 100%);
+            position: relative;
+        }
+        
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: white;
+        }
+        
+        .score-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .score-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1;
+        }
+        
+        .score-total {
+            font-size: 1.2rem;
+            color: var(--gray);
+        }
+        
+        .result-message {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: var(--dark);
+        }
+        
+        .feedback-container {
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .feedback-item {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            background-color: var(--light);
+        }
+        
+        .feedback-item.correct {
+            border-left: 5px solid var(--success);
+        }
+        
+        .feedback-item.incorrect {
+            border-left: 5px solid var(--danger);
+        }
+        
+        .feedback-question {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feedback-answer {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .correct-answer {
+            color: var(--success);
+            font-weight: 600;
+        }
+        
+        .incorrect-answer {
+            color: var(--danger);
+            font-weight: 600;
+        }
+        
+        .feedback-explanation {
+            color: var(--gray);
+            font-style: italic;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #dee2e6;
+        }
+        
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gray);
+            font-weight: 600;
+        }
+        
+        .timer i {
+            color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .question-text {
+                font-size: 1.2rem;
+            }
+            
+            .option {
+                padding: 15px;
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .score-circle::before {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .score-value {
+                font-size: 2.5rem;
+            }
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+        
+        .shape-1 {
+            width: 80px;
+            height: 80px;
+            background-color: var(--accent);
+            top: 10%;
+            left: 5%;
+            animation: float 15s infinite linear;
+        }
+        
+        .shape-2 {
+            width: 120px;
+            height: 120px;
+            background-color: var(--primary);
+            top: 60%;
+            right: 5%;
+            animation: float 20s infinite linear reverse;
+        }
+        
+        .shape-3 {
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary);
+            bottom: 10%;
+            left: 10%;
+            animation: float 12s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+        
+        .shuffle-notice {
+            background-color: #e6eeff;
+            border-left: 4px solid var(--primary);
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .shuffle-notice i {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        
+        <div class="quiz-header">
+            <h1><i class="fas fa-code"></i> HTML CSS </h1>
+        
+            
+            <div class="quiz-progress">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+        </div>
+        
+        <div class="quiz-body">
+         
+            
+            <div id="question-container" class="question-container">
+                <!-- Question content will be inserted here by JavaScript -->
+            </div>
+            
+            <div class="quiz-footer">
+                <button class="btn btn-prev" id="prev-btn" disabled>
+                    <i class="fas fa-arrow-left"></i> Précédent
+                </button>
+                
+                <div class="timer">
+                    <i class="fas fa-clock"></i>
+                    <span id="timer">15:00</span>
+                </div>
+                
+                <button class="btn btn-next" id="next-btn">
+                    Suivant <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <button class="btn btn-submit" id="submit-btn" style="display: none;">
+                    <i class="fas fa-paper-plane"></i> Soumettre
+                </button>
+            </div>
+        </div>
+        
+        <div id="results-container" class="results-container">
+            <div class="results-header">
+                <h2>Résultats du Quiz</h2>
+            </div>
+            
+            <div class="score-circle">
+                <div class="score-text">
+                    <div class="score-value" id="score-value">0</div>
+                    <div class="score-total">/ 25</div>
+                </div>
+            </div>
+            
+            <div class="result-message" id="result-message"></div>
+            
+            <div class="feedback-container" id="feedback-container">
+                <!-- Feedback will be inserted here by JavaScript -->
+            </div>
+            
+            <button class="btn btn-restart" id="restart-btn">
+                <i class="fas fa-redo"></i> Recommencer le quiz
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Questions du quiz (25 questions)
+        const originalQuestions = [
+            // Questions sur les tables HTML
+            {
+                question: "Quelle balise est utilisée pour créer un tableau HTML?",
+                options: [
+                    "&lt;table&gt;",
+                    "&lt;tab&gt;",
+                    "&lt;grid&gt;",
+                    "&lt;tr&gt;"
+                ],
+                correct: 0,
+                explanation: "La balise &lt;table&gt; est utilisée pour créer un tableau HTML."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer une ligne dans un tableau?",
+                options: [
+                    "&lt;td&gt;",
+                    "&lt;tr&gt;",
+                    "&lt;th&gt;",
+                    "&lt;row&gt;"
+                ],
+                correct: 1,
+                explanation: "La balise &lt;tr&gt; est utilisée pour créer une ligne dans un tableau HTML."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer une cellule de données dans un tableau?",
+                options: [
+                    "&lt;td&gt;",
+                    "&lt;tr&gt;",
+                    "&lt;th&gt;",
+                    "&lt;cell&gt;"
+                ],
+                correct: 0,
+                explanation: "La balise &lt;td&gt; est utilisée pour créer une cellule de données dans un tableau HTML."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer une cellule d'en-tête dans un tableau?",
+                options: [
+                    "&lt;td&gt;",
+                    "&lt;th&gt;",
+                    "&lt;header&gt;",
+                    "&lt;thead&gt;"
+                ],
+                correct: 1,
+                explanation: "La balise &lt;th&gt; est utilisée pour créer une cellule d'en-tête dans un tableau HTML."
+            },
+            {
+                question: "Quel attribut est utilisé pour fusionner des cellules horizontalement?",
+                options: [
+                    "rowspan",
+                    "colspan",
+                    "merge",
+                    "span"
+                ],
+                correct: 1,
+                explanation: "L'attribut 'colspan' est utilisé pour fusionner des cellules horizontalement dans un tableau HTML."
+            },
+            {
+                question: "Quel attribut est utilisé pour fusionner des cellules verticalement?",
+                options: [
+                    "rowspan",
+                    "colspan",
+                    "merge",
+                    "span"
+                ],
+                correct: 0,
+                explanation: "L'attribut 'rowspan' est utilisé pour fusionner des cellules verticalement dans un tableau HTML."
+            },
+            {
+                question: "Quelle balise est utilisée pour regrouper le contenu de l'en-tête d'un tableau?",
+                options: [
+                    "&lt;thead&gt;",
+                    "&lt;header&gt;",
+                    "&lt;thgroup&gt;",
+                    "&lt;top&gt;"
+                ],
+                correct: 0,
+                explanation: "La balise &lt;thead&gt; est utilisée pour regrouper le contenu de l'en-tête d'un tableau HTML."
+            },
+            {
+                question: "Quelle balise est utilisée pour regrouper le contenu du corps d'un tableau?",
+                options: [
+                    "&lt;tbody&gt;",
+                    "&lt;body&gt;",
+                    "&lt;content&gt;",
+                    "&lt;main&gt;"
+                ],
+                correct: 0,
+                explanation: "La balise &lt;tbody&gt; est utilisée pour regrouper le contenu du corps d'un tableau HTML."
+            },
+            {
+                question: "Quelle balise est utilisée pour regrouper le contenu du pied d'un tableau?",
+                options: [
+                    "&lt;tfoot&gt;",
+                    "&lt;footer&gt;",
+                    "&lt;bottom&gt;",
+                    "&lt;foot&gt;"
+                ],
+                correct: 0,
+                explanation: "La balise &lt;tfoot&gt; est utilisée pour regrouper le contenu du pied d'un tableau HTML."
+            },
+            {
+                question: "Quel attribut est utilisé pour ajouter une bordure à un tableau?",
+                options: [
+                    "border",
+                    "frame",
+                    "outline",
+                    "stroke"
+                ],
+                correct: 0,
+                explanation: "L'attribut 'border' est utilisé pour ajouter une bordure à un tableau HTML."
+            },
+            
+            // Questions sur les formulaires
+            {
+                question: "Quelle balise est utilisée pour créer un formulaire HTML?",
+                options: [
+                    "&lt;form&gt;",
+                    "&lt;input&gt;",
+                    "&lt;submit&gt;",
+                    "&lt;fieldset&gt;"
+                ],
+                correct: 0,
+                explanation: "La balise &lt;form&gt; est utilisée pour créer un formulaire HTML pour la saisie des utilisateurs."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer un champ de saisie de texte?",
+                options: [
+                    "&lt;input type='text'&gt;",
+                    "&lt;textfield&gt;",
+                    "&lt;text&gt;",
+                    "&lt;input type='string'&gt;"
+                ],
+                correct: 0,
+                explanation: "&lt;input type='text'&gt; est utilisé pour créer un champ de saisie de texte dans un formulaire."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer une case à cocher?",
+                options: [
+                    "&lt;input type='text'&gt;",
+                    "&lt;input type='checkbox'&gt;",
+                    "&lt;input type='radio'&gt;",
+                    "&lt;check&gt;"
+                ],
+                correct: 1,
+                explanation: "&lt;input type='checkbox'&gt; est utilisé pour créer une case à cocher dans un formulaire."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer un bouton radio?",
+                options: [
+                    "&lt;input type='text'&gt;",
+                    "&lt;input type='checkbox'&gt;",
+                    "&lt;input type='radio'&gt;",
+                    "&lt;radio&gt;"
+                ],
+                correct: 2,
+                explanation: "&lt;input type='radio'&gt; est utilisé pour créer un bouton radio dans un formulaire."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer une liste déroulante?",
+                options: [
+                    "&lt;select&gt;",
+                    "&lt;dropdown&gt;",
+                    "&lt;list&gt;",
+                    "&lt;option&gt;"
+                ],
+                correct: 0,
+                explanation: "La balise &lt;select&gt; est utilisée pour créer une liste déroulante dans un formulaire."
+            },
+            {
+                question: "Quelle balise est utilisée pour créer une zone de texte multiligne?",
+                options: [
+                    "&lt;textarea&gt;",
+                    "&lt;input type='text'&gt;",
+                    "&lt;multiline&gt;",
+                    "&lt;textbox&gt;"
+                ],
+                correct: 0,
+                explanation: "La balise &lt;textarea&gt; est utilisée pour créer une zone de texte multiligne dans un formulaire."
+            },
+            {
+                question: "Quel attribut est utilisé pour spécifier l'action d'un formulaire?",
+                options: [
+                    "action",
+                    "method",
+                    "submit",
+                    "target"
+                ],
+                correct: 0,
+                explanation: "L'attribut 'action' spécifie l'URL où les données du formulaire seront envoyées."
+            },
+            {
+                question: "Quelle méthode HTTP est généralement utilisée pour envoyer des données de formulaire?",
+                options: [
+                    "GET",
+                    "POST",
+                    "PUT",
+                    "SEND"
+                ],
+                correct: 1,
+                explanation: "La méthode POST est généralement utilisée pour envoyer des données de formulaire car elle est plus sécurisée que GET."
+            },
+            {
+                question: "Quel attribut est utilisé pour rendre un champ de formulaire obligatoire?",
+                options: [
+                    "required",
+                    "mandatory",
+                    "necessary",
+                    "must"
+                ],
+                correct: 0,
+                explanation: "L'attribut 'required' est utilisé pour rendre un champ de formulaire obligatoire."
+            },
+            {
+                question: "Quel attribut est utilisé pour spécifier un texte d'aide dans un champ de formulaire?",
+                options: [
+                    "placeholder",
+                    "hint",
+                    "help",
+                    "tip"
+                ],
+                correct: 0,
+                explanation: "L'attribut 'placeholder' est utilisé pour spécifier un texte d'aide dans un champ de formulaire."
+            },
+            
+            // Questions sur les bases du CSS
+            {
+                question: "Que signifie l'acronyme CSS?",
+                options: [
+                    "Cascading Style Sheets",
+                    "Computer Style Sheets",
+                    "Creative Style System",
+                    "Colorful Style Sheets"
+                ],
+                correct: 0,
+                explanation: "CSS signifie Cascading Style Sheets. C'est le langage utilisé pour décrire la présentation des documents HTML."
+            },
+            {
+                question: "Quelle propriété CSS est utilisée pour changer la couleur du texte?",
+                options: [
+                    "text-color",
+                    "font-color",
+                    "color",
+                    "text-style"
+                ],
+                correct: 2,
+                explanation: "La propriété 'color' est utilisée pour changer la couleur du texte en CSS."
+            },
+            {
+                question: "Quelle propriété CSS est utilisée pour changer la couleur d'arrière-plan?",
+                options: [
+                    "bgcolor",
+                    "background-color",
+                    "backcolor",
+                    "color-background"
+                ],
+                correct: 1,
+                explanation: "La propriété 'background-color' est utilisée pour changer la couleur d'arrière-plan en CSS."
+            },
+            {
+                question: "Quelle propriété CSS est utilisée pour changer la taille de la police?",
+                options: [
+                    "text-size",
+                    "font-size",
+                    "text-style",
+                    "font-style"
+                ],
+                correct: 1,
+                explanation: "La propriété 'font-size' est utilisée pour changer la taille de la police en CSS."
+            },
+            {
+                question: "Quelle propriété CSS est utilisée pour ajouter une marge intérieure?",
+                options: [
+                    "margin",
+                    "padding",
+                    "spacing",
+                    "inner-margin"
+                ],
+                correct: 1,
+                explanation: "La propriété 'padding' est utilisée pour ajouter une marge intérieure en CSS."
+            }
+        ];
+
+        // Fonction pour mélanger un tableau (algorithme de Fisher-Yates)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Variables d'état du quiz
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let timeLeft = 15 * 60; // 20 minutes en secondes
+        let timerInterval;
+        let questions = [];
+
+        // Éléments DOM
+        const questionContainer = document.getElementById('question-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreValue = document.getElementById('score-value');
+        const resultMessage = document.getElementById('result-message');
+        const feedbackContainer = document.getElementById('feedback-container');
+        const restartBtn = document.getElementById('restart-btn');
+        const timerElement = document.getElementById('timer');
+
+        // Initialisation du quiz
+        function initQuiz() {
+            // Mélanger les questions
+            questions = shuffleArray([...originalQuestions]);
+            
+            // Initialiser le tableau des réponses utilisateur
+            userAnswers = new Array(questions.length).fill(null);
+            
+            showQuestion(currentQuestion);
+            updateProgressBar();
+            updateNavigationButtons();
+            startTimer();
+        }
+
+        // Afficher une question
+        function showQuestion(index) {
+            const question = questions[index];
+            const letters = ['A', 'B', 'C', 'D'];
+            
+            let optionsHTML = '';
+            question.options.forEach((option, i) => {
+                const isSelected = userAnswers[index] === i;
+                optionsHTML += `
+                    <div class="option ${isSelected ? 'selected' : ''}" data-index="${i}">
+                        <div class="option-letter">${letters[i]}</div>
+                        <div class="option-text">${option}</div>
+                    </div>
+                `;
+            });
+            
+            questionContainer.innerHTML = `
+                <div class="question-number">
+                    <i class="fas fa-question-circle"></i>
+                    Question ${index + 1} sur ${questions.length}
+                </div>
+                <div class="question-text">${question.question}</div>
+                <div class="options-container">${optionsHTML}</div>
+            `;
+            
+            // Ajouter les écouteurs d'événements aux options
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    selectOption(this, index);
+                });
+            });
+        }
+
+        // Sélectionner une option
+        function selectOption(optionElement, questionIndex) {
+            // Désélectionner toutes les options de cette question
+            document.querySelectorAll(`.option`).forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Sélectionner l'option cliquée
+            optionElement.classList.add('selected');
+            
+            // Enregistrer la réponse de l'utilisateur
+            const selectedIndex = parseInt(optionElement.getAttribute('data-index'));
+            userAnswers[questionIndex] = selectedIndex;
+            
+            // Mettre à jour les boutons de navigation
+            updateNavigationButtons();
+        }
+
+        // Mettre à jour la barre de progression
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Mettre à jour les boutons de navigation
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'flex';
+                submitBtn.disabled = userAnswers[currentQuestion] === null;
+            } else {
+                nextBtn.style.display = 'flex';
+                submitBtn.style.display = 'none';
+                nextBtn.disabled = userAnswers[currentQuestion] === null;
+            }
+        }
+
+        // Démarrer le minuteur
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+            }, 1000);
+        }
+
+        // Mettre à jour l'affichage du minuteur
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Changer la couleur lorsque le temps est presque écoulé
+            if (timeLeft < 300) { // 5 minutes
+                timerElement.style.color = 'var(--danger)';
+            }
+        }
+
+        // Aller à la question précédente
+        prevBtn.addEventListener('click', function() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+                updateProgressBar();
+                updateNavigationButtons();
+            }
+        });
+
+        // Aller à la question suivante
+        nextBtn.addEventListener('click', function() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                updateProgressBar();
+                updateNavigationButtons();
+            }
+        });
+
+        // Soumettre le quiz
+        submitBtn.addEventListener('click', function() {
+            clearInterval(timerInterval);
+            showResults();
+        });
+
+        // Afficher les résultats
+        function showResults() {
+            // Calculer le score
+            let score = 0;
+            questions.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    score++;
+                }
+            });
+            
+            // Mettre à jour le score dans le cercle
+            scoreValue.textContent = score;
+            
+            // Mettre à jour le dégradé du cercle de score
+            const percentage = (score / questions.length) * 100;
+            document.querySelector('.score-circle').style.background = 
+                `conic-gradient(var(--success) 0% ${percentage}%, #e9ecef ${percentage}% 100%)`;
+            
+            // Afficher un message en fonction du score
+            let message = '';
+            if (score === questions.length) {
+                message = "Félicitations! Vous maîtrisez parfaitement les tables HTML, les formulaires et le CSS! 🎉";
+            } else if (score >= questions.length * 0.8) {
+                message = "Excellent travail! Vous avez une très bonne compréhension des tables HTML, formulaires et CSS!";
+            } else if (score >= questions.length * 0.6) {
+                message = "Bon travail! Vous connaissez les bases, mais vous pouvez encore vous améliorer.";
+            } else {
+                message = "Continuez à pratiquer! Réviser les tables HTML, formulaires et CSS vous aidera à progresser.";
+            }
+            resultMessage.textContent = message;
+            
+            // Afficher les feedbacks pour chaque question
+            feedbackContainer.innerHTML = '';
+            questions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.correct;
+                const letters = ['A', 'B', 'C', 'D'];
+                
+                const feedbackItem = document.createElement('div');
+                feedbackItem.className = `feedback-item ${isCorrect ? 'correct' : 'incorrect'}`;
+                
+                let userAnswerText = 'Aucune réponse';
+                if (userAnswer !== null) {
+                    userAnswerText = `${letters[userAnswer]}. ${question.options[userAnswer]}`;
+                }
+                
+                const correctAnswerText = `${letters[question.correct]}. ${question.options[question.correct]}`;
+                
+                feedbackItem.innerHTML = `
+                    <div class="feedback-question">
+                        <i class="fas fa-question"></i>
+                        <span>Question ${index + 1}: ${question.question}</span>
+                    </div>
+                    <div class="feedback-answer ${isCorrect ? 'correct-answer' : 'incorrect-answer'}">
+                        <i class="fas ${isCorrect ? 'fa-check' : 'fa-times'}"></i>
+                        <span>Votre réponse: ${userAnswerText}</span>
+                    </div>
+                    ${!isCorrect ? `
+                        <div class="feedback-answer correct-answer">
+                            <i class="fas fa-check"></i>
+                            <span>Réponse correcte: ${correctAnswerText}</span>
+                        </div>
+                    ` : ''}
+                    <div class="feedback-explanation">
+                        <i class="fas fa-lightbulb"></i>
+                        ${question.explanation}
+                    </div>
+                `;
+                
+                feedbackContainer.appendChild(feedbackItem);
+            });
+            
+            // Afficher les résultats et masquer le quiz
+            document.querySelector('.quiz-body').style.display = 'none';
+            resultsContainer.style.display = 'block';
+        }
+
+        // Redémarrer le quiz
+        restartBtn.addEventListener('click', function() {
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            timeLeft = 15 * 60;
+            
+            document.querySelector('.quiz-body').style.display = 'flex';
+            resultsContainer.style.display = 'none';
+            
+            // Réinitialiser le minuteur
+            timerElement.style.color = 'var(--gray)';
+            
+            // Mélanger à nouveau les questions pour un nouvel ordre aléatoire
+            initQuiz();
+        });
+
+        // Initialiser le quiz au chargement de la page
+        document.addEventListener('DOMContentLoaded', initQuiz);
+    </script>
+</body>
+</html>
